@@ -1,5 +1,6 @@
-package com.example.rest.webservices.restfulwebservices;
+package com.example.rest.webservices.restfulwebservices.resource;
 
+import com.example.rest.webservices.restfulwebservices.bean.HelloWorldBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
