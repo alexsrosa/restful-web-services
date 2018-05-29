@@ -41,7 +41,7 @@ public class UserResource {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedUser.getId())
+                .buildAndExpand(savedUser.getUserId())
                 .toUri();
 
         return ResponseEntity.created(location).build();

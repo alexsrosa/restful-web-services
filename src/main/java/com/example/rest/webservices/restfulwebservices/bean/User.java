@@ -1,30 +1,40 @@
 package com.example.rest.webservices.restfulwebservices.bean;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class User {
 
-    private Integer id;
+    private Integer userId;
     private String name;
     private LocalDate birthDate;
+    private List<Post> posts = new ArrayList<>();
 
     protected User(){
 
     }
 
-    public User(Integer id, String name, LocalDate birthDate) {
-        this.id = id;
+    public User(Integer userId, String name, LocalDate birthDate) {
+        this.userId = userId;
         this.name = name;
         this.birthDate = birthDate;
     }
 
-    public Integer getId() {
-        return id;
+    public User(Integer userId, String name, LocalDate birthDate, List<Post> posts) {
+        this.userId = userId;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.posts = posts;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -43,12 +53,25 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public List<Post> getPosts() {
+        return Collections.unmodifiableList(posts);
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void addPost(Post post){
+        this.posts.add(post);
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
+                ", posts=" + posts +
                 '}';
     }
 }
