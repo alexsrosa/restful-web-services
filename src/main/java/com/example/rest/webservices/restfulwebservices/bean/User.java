@@ -1,5 +1,9 @@
 package com.example.rest.webservices.restfulwebservices.bean;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +12,13 @@ import java.util.List;
 public class User {
 
     private Integer userId;
+
+    @Size(min = 2, message = "Name should have atleast 2 characters")
     private String name;
+
+    @Past
     private LocalDate birthDate;
+
     private List<Post> posts = new ArrayList<>();
 
     protected User(){

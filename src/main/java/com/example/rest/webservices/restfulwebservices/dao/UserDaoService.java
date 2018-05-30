@@ -48,4 +48,15 @@ public class UserDaoService {
         }
         return null;
     }
+
+    public User deleteById(int id){
+
+        User user = findOne(id);
+
+        if(Objects.nonNull(user)){
+            users.remove(user);
+        }
+
+        return user;
+    }
 }
