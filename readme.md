@@ -7,10 +7,12 @@
 <h4>Spring Boot - https://projects.spring.io/spring-boot/</h4>
 <h4>Maven - https://maven.apache.org/</h4>
 
-## implementations
+## Implementations
 
 <h4>RESTful web services</h4>
 <h4>HTTP - Methods GET, POST, DELETE, etc..</h4>
 <h4>Validations</h4>
 <h4>HATEOAS</h4>
 <h4>Internationalizations</h4>
+<h4>Use Jackson Dataformat XML</h4>
+<h4>Swagger Documentation</h4>
