@@ -1,6 +1,7 @@
 package com.example.rest.webservices.restfulwebservices.bean;
 
-import org.springframework.web.bind.annotation.PathVariable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -9,14 +10,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Classe represent User.
+ *
+ * @author alexsrosa
+ */
+@ApiModel(description = "All details about the user.")
 public class User {
 
     private Integer userId;
 
     @Size(min = 2, message = "Name should have atleast 2 characters")
+    @ApiModelProperty(notes = "Name should have atleast 2 characters")
     private String name;
 
     @Past
+    @ApiModelProperty(notes = "Birth date Should be in the past")
     private LocalDate birthDate;
 
     private List<Post> posts = new ArrayList<>();

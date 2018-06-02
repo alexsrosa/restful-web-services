@@ -33,7 +33,7 @@ public class UserDaoService {
 
     public User save(User user){
         if(Objects.isNull(user.getUserId())){
-            user.setUserId(++usersCounts);
+            user.setUserId(this.getId());
         }
         users.add(user);
         return user;
@@ -58,5 +58,9 @@ public class UserDaoService {
         }
 
         return user;
+    }
+
+    private static int getId(){
+        return ++usersCounts;
     }
 }

@@ -1,10 +1,21 @@
 package com.example.rest.webservices.restfulwebservices.bean;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
+/**
+ * Classe represent Post.
+ *
+ * @author alexsrosa
+ */
+@ApiModel(description = "All details about the post.")
 public class Post {
 
     private Integer postId;
+
+    @ApiModelProperty(notes = "Text to post by User")
     private String post;
     private LocalDateTime postDate;
 
