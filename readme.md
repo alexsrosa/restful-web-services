@@ -10,6 +10,7 @@
 <h4>-Swagger - https://swagger.io/</h4>
 <h4>-Spring Actuator - https://spring.io/guides/gs/actuator-service/</h4>
 <h4>-HAL-browser - https://github.com/mikekelly/hal-browser</h4>
+<h4>-Spring Security - https://spring.io/projects/spring-security</h4>
 
 ## Implementations
 
@@ -26,3 +27,4 @@
     <pre>http://localhost:8080/actuator</pre>
 <h4>- HAL-browser. Access by:</h4>
     <pre>http://localhost:8080/browser/index.html#/actuator</pre>
+<h4>- Versioning</h4>
