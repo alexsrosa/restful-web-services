@@ -3,12 +3,15 @@ package com.example.rest.webservices.restfulwebservices.bean;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe represent User.
@@ -16,8 +19,11 @@ import java.util.List;
  * @author alexsrosa
  */
 @ApiModel(description = "All details about the user.")
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer userId;
 
     @Size(min = 2, message = "Name should have atleast 2 characters")
@@ -28,10 +34,10 @@ public class User {
     @ApiModelProperty(notes = "Birth date Should be in the past")
     private LocalDate birthDate;
 
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
-    protected User(){
-
+    public User(){
     }
 
     public User(Integer userId, String name, LocalDate birthDate) {
@@ -40,11 +46,8 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public User(Integer userId, String name, LocalDate birthDate, List<Post> posts) {
+    public User(int userId) {
         this.userId = userId;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.posts = posts;
     }
 
     public Integer getUserId() {
@@ -72,15 +75,27 @@ public class User {
     }
 
     public List<Post> getPosts() {
-        return Collections.unmodifiableList(posts);
+        return posts;
     }
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 
-    public void addPost(Post post){
-        this.posts.add(post);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getUserId(), user.getUserId()) &&
+                Objects.equals(getName(), user.getName()) &&
+                Objects.equals(getBirthDate(), user.getBirthDate());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getUserId(), getName(), getBirthDate());
     }
 
     @Override
@@ -89,7 +104,6 @@ public class User {
                 "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
-                ", posts=" + posts +
                 '}';
     }
 }

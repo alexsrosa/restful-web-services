@@ -1,9 +1,12 @@
 package com.example.rest.webservices.restfulwebservices.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Classe represent Post.
@@ -11,28 +14,23 @@ import java.time.LocalDateTime;
  * @author alexsrosa
  */
 @ApiModel(description = "All details about the post.")
+@Entity
 public class Post {
 
+    @Id
+    @GeneratedValue
     private Integer postId;
 
     @ApiModelProperty(notes = "Text to post by User")
     private String post;
+
     private LocalDateTime postDate;
 
-    protected Post() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 
-    }
-
-    public Post(Integer postId, String post, LocalDateTime postDate) {
-        this.postId = postId;
-        this.post = post;
-        this.postDate = postDate;
-    }
-
-    public Post(Integer postId, String post, LocalDateTime postDate, User user) {
-        this.postId = postId;
-        this.post = post;
-        this.postDate = postDate;
+    public Post() {
     }
 
     public Integer getPostId() {
@@ -63,12 +61,38 @@ public class Post {
         this.postDate = postDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Post)) return false;
+        Post post1 = (Post) o;
+        return Objects.equals(getPostId(), post1.getPostId()) &&
+                Objects.equals(getPost(), post1.getPost()) &&
+                Objects.equals(getPostDate(), post1.getPostDate()) &&
+                Objects.equals(getUser(), post1.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getPostId(), getPost(), getPostDate(), getUser());
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "postId=" + postId +
                 ", post='" + post + '\'' +
                 ", postDate=" + postDate +
+                ", user=" + user +
                 '}';
     }
 }

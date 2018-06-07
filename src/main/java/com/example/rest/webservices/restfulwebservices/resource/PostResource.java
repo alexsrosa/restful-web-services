@@ -2,10 +2,8 @@ package com.example.rest.webservices.restfulwebservices.resource;
 
 import com.example.rest.webservices.restfulwebservices.bean.Post;
 import com.example.rest.webservices.restfulwebservices.bean.User;
-import com.example.rest.webservices.restfulwebservices.dao.PostDaoService;
-import com.example.rest.webservices.restfulwebservices.dao.UserDaoService;
 import com.example.rest.webservices.restfulwebservices.exception.PostNotFoundException;
-import com.example.rest.webservices.restfulwebservices.exception.UserNotFoundException;
+import com.example.rest.webservices.restfulwebservices.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +17,16 @@ import java.util.Objects;
 public class PostResource {
 
     @Autowired
-    private PostDaoService service;
+    private PostRepository repository;
 
     @GetMapping("/users/{userId}/posts")
     public List<Post> retrieveAllPosts(@PathVariable int userId){
-        return service.findAllPostsForUser(userId);
+        return repository.findByUser(new User(userId));
     }
 
     @GetMapping("/users/{userId}/posts/{postId}")
     public Post retrieveUser(@PathVariable int userId, @PathVariable int postId){
-        Post post = service.findOne(userId, postId);
+        Post post = repository.findByUserAndAndPostId(new User(userId), postId);
 
         if (Objects.isNull(post)){
             throw new PostNotFoundException("postId:".concat(String.valueOf(postId)));
@@ -39,7 +37,8 @@ public class PostResource {
 
     @PostMapping("/users/{userId}/posts")
     public ResponseEntity<Object> createPostForUser(@RequestBody Post post, @PathVariable int userId){
-        Post postSaved = service.save(post, userId);
+        post.setUser(new User(userId));
+        Post postSaved = repository.save(post);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -48,5 +47,16 @@ public class PostResource {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/users/{userId}/posts/{postId}")
+    public void deletePostForUser(@PathVariable int userId, @PathVariable int postId){
+        Post post = repository.findByUserAndAndPostId(new User(userId), postId);
+
+        if (Objects.isNull(post)){
+            throw new PostNotFoundException("postId:".concat(String.valueOf(postId)));
+        }
+
+        repository.delete(post);
     }
 }
